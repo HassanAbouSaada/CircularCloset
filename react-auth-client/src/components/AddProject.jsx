@@ -8,13 +8,14 @@ function AddProject(props) {
   const [height, setHeight] = useState("");
   const [color, setColor] = useState("#000000"); // Default color is black
 
+  console.log(width, height, color);
   const handleSubmit = (e) => {
     e.preventDefault();
     const requestBody = { title, description, width, height, color };
-
     projectsService
       .createProject(requestBody)
       .then((response) => {
+        console.log(response);
         // Reset the state
         setTitle("");
         setDescription("");

@@ -6,6 +6,18 @@ function AddCloset() {
   const [closetHeight, setClosetHeight] = useState("");
   const [columns, setColumns] = useState([]);
 
+  const RowDetails = ({ rowDetails }) => {
+    // This component will display the details of the selected row (compartment)
+    return (
+      <div>
+        <h3>Row Details</h3>
+        <p>Row: {rowDetails.rowIndex}</p>
+        <p>Column: {rowDetails.columnIndex}</p>
+        {/* Add more details here */}
+      </div>
+    );
+  };
+
   const handleAddColumn = () => {
     setColumns((prevColumns) => [
       ...prevColumns,
@@ -59,13 +71,22 @@ function AddCloset() {
     const width = parseInt(closetWidth);
     const height = parseInt(closetHeight);
 
+    const handleRowClick = (rowIndex, columnIndex) => {
+        // When a row is clicked, navigate to the new page
+        // You can use React Router's history.push() method to navigate
+        // to the desired page and pass the row details as state
+        history.push("/row-details", { rowIndex, columnIndex });
+      };
+
     const requestBody = {
       width,
       height,
       columns: columns.map(({ width, compartments, compartmentHeights }) => ({
         width: parseInt(width),
         compartments: parseInt(compartments),
-        compartmentHeights: compartmentHeights.map((height) => parseInt(height)),
+        compartmentHeights: compartmentHeights.map((height) =>
+          parseInt(height)
+        ),
       })),
     };
 
@@ -79,7 +100,11 @@ function AddCloset() {
       .catch((error) => console.log(error));
   };
 
-  const renderColumnCompartments = (compartments, compartmentHeights, columnIndex) => {
+  const renderColumnCompartments = (
+    compartments,
+    compartmentHeights,
+    columnIndex
+  ) => {
     return compartments > 0
       ? compartmentHeights.map((height, compartmentIndex) => (
           <div
@@ -91,16 +116,16 @@ function AddCloset() {
               clear: "both",
               marginTop: "10px",
               position: "relative",
+              cursor: "pointer", // Add cursor pointer to indicate clickable
             }}
+            onClick={() => handleRowClick(compartmentIndex, columnIndex)}
           >
             <div
               style={{
                 position: "absolute",
                 top: "5px",
                 right: "5px",
-                cursor: "pointer",
               }}
-              onClick={() => handleRemoveCompartment(columnIndex, compartmentIndex)}
             >
               ✖️
             </div>
@@ -132,7 +157,11 @@ function AddCloset() {
         >
           ✖️
         </div>
-        {renderColumnCompartments(column.compartments, column.compartmentHeights, columnIndex)}
+        {renderColumnCompartments(
+          column.compartments,
+          column.compartmentHeights,
+          columnIndex
+        )}
       </div>
     ));
   };
@@ -182,22 +211,31 @@ function AddCloset() {
               />
             </div>
             {column.compartments > 0 &&
-              Array.from({ length: column.compartments }).map((_, compartmentIndex) => (
-                <div key={compartmentIndex}>
-                  <label>
-                    Compartment {compartmentIndex + 1} Height (cm) (Column {index + 1}):
-                  </label>
-                  <input
-                    type="number"
-                    value={column.compartmentHeights[compartmentIndex] || ""}
-                    onChange={(e) =>
-                      handleCompartmentHeightChange(e, index, compartmentIndex)
-                    }
-                  />
-                </div>
-              ))}
+              Array.from({ length: column.compartments }).map(
+                (_, compartmentIndex) => (
+                  <div key={compartmentIndex}>
+                    <label>
+                      Compartment {compartmentIndex + 1} Height (cm) (Column{" "}
+                      {index + 1}):
+                    </label>
+                    <input
+                      type="number"
+                      value={column.compartmentHeights[compartmentIndex] || ""}
+                      onChange={(e) =>
+                        handleCompartmentHeightChange(
+                          e,
+                          index,
+                          compartmentIndex
+                        )
+                      }
+                    />
+                  </div>
+                )
+              )}
             {column.compartments > 0 && (
-              <button onClick={() => handleRemoveColumn(index)}>Remove Column</button>
+              <button onClick={() => handleRemoveColumn(index)}>
+                Remove Column
+              </button>
             )}
           </div>
         ))}
@@ -205,16 +243,17 @@ function AddCloset() {
         <button type="submit">Submit</button>
       </form>
 
-      <div
-        style={{
-          width: `${closetWidth}px`,
-          height: `${closetHeight}px`,
-          border: "1px solid black",
-          margin: "10px",
-          overflow: "hidden",
-        }}
-      >
-        {renderColumns()}
+      <div className="closet-container">
+        <div
+          style={{
+            width: `${closetWidth}px`,
+            height: `${closetHeight}px`,
+            border: "1px solid black",
+            background: "#f5f5f5", // Light gray background
+          }}
+        >
+          {renderColumns()}
+        </div>
       </div>
     </div>
   );
