@@ -1,0 +1,11 @@
+/* closet-details.css */
+
+.ClosetDetailsPage {
+    background-color: var(--selected-background-color, #747576);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+  }
+  

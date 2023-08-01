@@ -13,13 +13,22 @@ const allRoutes = require("./routes");
 app.use("/api", allRoutes);
 
 const projectRouter = require("./routes/project.routes");
-app.use("/api", isAuthenticated, projectRouter); 
+app.use("/api", isAuthenticated, projectRouter);
 
 const taskRouter = require("./routes/task.routes");
 app.use("/api", isAuthenticated, taskRouter);
 
 const authRouter = require("./routes/auth.routes");
 app.use("/auth", authRouter);
+
+const closetRouter = require("./routes/closet.routes");
+app.use("/api", isAuthenticated, closetRouter);
+
+const itemRouter = require("./routes/item.routes");
+app.use("/api", itemRouter);
+
+const userRouter = require("./routes/user.routes");
+app.use("/api", userRouter);
 
 require("./error-handling")(app);
 

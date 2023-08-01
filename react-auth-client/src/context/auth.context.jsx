@@ -6,15 +6,16 @@ const AuthContext = React.createContext();
 function AuthProviderWrapper(props) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState({});
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const storeToken = (token) => {
     localStorage.setItem("authToken", token);
   };
+  const storedToken = localStorage.getItem("authToken");
 
   const authenticateUser = () => {
     // Get the stored token from the localStorage
-    const storedToken = localStorage.getItem("authToken");
 
     // If the token exists in the localStorage
     if (storedToken) {
@@ -37,7 +38,7 @@ function AuthProviderWrapper(props) {
           // Update state variables
           setIsLoggedIn(false);
           setIsLoading(false);
-          setUser(null);
+          setUser({});
         });
     } else {
       // If the token is not available
@@ -45,6 +46,10 @@ function AuthProviderWrapper(props) {
       setIsLoading(false);
       setUser(null);
     }
+  };
+
+  const updateUser = (updatedUser) => {
+    setUser(updatedUser);
   };
 
   const removeToken = () => {
@@ -67,11 +72,15 @@ function AuthProviderWrapper(props) {
     <AuthContext.Provider
       value={{
         isLoggedIn,
+        setIsLoggedIn,
         isLoading,
         user,
+        sidebarOpen,
         storeToken,
         authenticateUser,
         logOutUser,
+        setSidebarOpen,
+        updateUser,
       }}
     >
       {props.children}

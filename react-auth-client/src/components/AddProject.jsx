@@ -1,4 +1,4 @@
-import { useState } from "react";
+/* import { useState } from "react";
 import projectsService from "../services/projects.service";
 
 function AddProject(props) {
@@ -9,6 +9,7 @@ function AddProject(props) {
   const [color, setColor] = useState("#000000"); // Default color is black
 
   console.log(width, height, color);
+  
   const handleSubmit = (e) => {
     e.preventDefault();
     const requestBody = { title, description, width, height, color };
@@ -79,3 +80,4 @@ function AddProject(props) {
 }
 
 export default AddProject;
+ */

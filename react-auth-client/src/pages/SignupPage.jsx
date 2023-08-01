@@ -1,67 +1,96 @@
-// src/pages/SignupPage.jsx
-
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-// import axios from "axios";
-import authService from "./../services/auth.service"; 
+import { Form, Input, Button } from "antd";
+import { useNavigate } from "react-router-dom";
+import authService from "./../services/auth.service";
 
-const API_URL = "http://localhost:5005";
-
-function SignupPage(props) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
+function SignupPage() {
   const [errorMessage, setErrorMessage] = useState(undefined);
-
   const navigate = useNavigate();
+  const [form] = Form.useForm();
 
-  const handleEmail = (e) => setEmail(e.target.value);
-  const handlePassword = (e) => setPassword(e.target.value);
-  const handleName = (e) => setName(e.target.value);
-
-  const handleSignupSubmit = (e) => {
-    e.preventDefault();
- 
+  const handleSignupSubmit = (values) => {
+    const { email, password, name } = values;
     const requestBody = { email, password, name };
- 
-    // axios.post(`${API_URL}/auth/signup`, requestBody)
- 
-    authService.signup(requestBody)  //  <=== UPDATE
+
+    authService
+      .signup(requestBody)
       .then((response) => {
         navigate("/login");
       })
       .catch((error) => {
         const errorDescription = error.response.data.message;
         setErrorMessage(errorDescription);
-      })
+      });
   };
 
   return (
-    <div className="SignupPage">
-      <h1>Sign Up</h1>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100vh",
+      }}
+    >
+      <video
+        autoPlay
+        loop
+        muted
+        style={{
+          width: "100%",
+          position: "absolute",
+          top: 0,
+          left: 0,
+          zIndex: -1,
+        }}
+      >
+        <source src="https://res.cloudinary.com/doewm9ocg/video/upload/v1690456359/pexels-mart-production-7679419_720p_fzzdwz.mp4" />
+        Your browser does not support the video tag.
+      </video>
+      <Form
+        form={form}
+        onFinish={handleSignupSubmit}
+        layout="vertical"
+        style={{ width: "400px", marginLeft: "220px", marginTop: "-200px" }}
+      >
+        <h2>Create New Account</h2>
 
-      <form onSubmit={handleSignupSubmit}>
-        <label>Email:</label>
-        <input type="email" name="email" value={email} onChange={handleEmail} />
+        <Form.Item
+          label="Email"
+          name="email"
+          rules={[
+            {
+              required: true,
+              type: "email",
+              message: "Please enter a valid email",
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
 
-        <label>Password:</label>
-        <input
-          type="password"
+        <Form.Item
+          label="Password"
           name="password"
-          value={password}
-          onChange={handlePassword}
-        />
+          rules={[{ required: true, message: "Please enter a password" }]}
+        >
+          <Input.Password />
+        </Form.Item>
 
-        <label>Name:</label>
-        <input type="text" name="name" value={name} onChange={handleName} />
+        <Form.Item
+          label="Name"
+          name="name"
+          rules={[{ required: true, message: "Please enter your name" }]}
+        >
+          <Input />
+        </Form.Item>
 
-        <button type="submit">Sign Up</button>
-      </form>
-
-      {errorMessage && <p className="error-message">{errorMessage}</p>}
-
-      <p>Already have account?</p>
-      <Link to={"/login"}> Login</Link>
+        <Form.Item>
+          <Button type="primary" htmlType="submit" block>
+            Sign Up
+          </Button>
+        </Form.Item>
+      </Form>
     </div>
   );
 }

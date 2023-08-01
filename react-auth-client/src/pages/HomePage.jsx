@@ -1,19 +1,14 @@
-import { useState } from "react";
-import AddCloset from "../components/AddCloset";
-import Visualisation from "../components/Visualisation";
-
+import React, { useContext } from "react";
+import Closet from "../pages/closet";
+import { AuthContext } from '../context/auth.context';
 
 function HomePage() {
+  const { isAuthenticated } = useContext(AuthContext);
+
   return (
-    <div className="ProjectListPage">
-      <h1>Home Page</h1>
-      
-      <div>
-       {/*  <h1>Home Page</h1>
-        <GeometricalForms /> */}
-        <AddCloset />
-       
-      </div>
+    <div>
+   
+      <Closet />
     </div>
   );
 }

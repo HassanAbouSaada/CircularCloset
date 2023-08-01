@@ -2,73 +2,73 @@ import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import HomePage from "./pages/HomePage";
-import ProjectListPage from "./pages/ProjectListPage";
-import ProjectDetailsPage from "./pages/ProjectDetailsPage";
-import EditProjectPage from "./pages/EditProjectPage";
+import UsersPage from "./pages/UsersPage";
+import UsersDetailsPage from "./pages/UsersDetailsPage";
+//import EditProjectPage from "./pages/EditProjectPage";
 import SignupPage from "./pages/SignupPage";
 import LoginPage from "./pages/LoginPage";
 import IsPrivate from "./components/IsPrivate";
 import IsAnon from "./components/IsAnon";
-import AddCloset from "./components/AddCloset";
+
+// Sandbox
+import Closet from "./pages/closet";
+import ClosetDetails from "./pages/closet/ClosetDetails";
+import NewCloset from "./pages/closet/NewCloset";
+import { ClosetProvider } from "./context/ClosetContext";
 
 function App() {
   return (
     <div className="App">
       <Navbar />
+      <ClosetProvider>
+        <Routes>
+          <Route path="/closet" element={<Closet />} />
+          <Route path="/closet/new" element={<NewCloset />} />
+          <Route path="/closet/:closetId" element={<ClosetDetails />} />
 
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route
-          path="/projects"
-          element={
-            <IsPrivate>
-              {" "}
-              <ProjectListPage />{" "}
-            </IsPrivate>
-          }
-        />
-        <Route
-          path="/projects/:projectId"
-          element={
-            <IsPrivate>
-              {" "}
-              <ProjectDetailsPage />{" "}
-            </IsPrivate>
-          }
-        />
+          <Route
+            path="/"
+            element={
+              <IsPrivate>
+                <HomePage />
+              </IsPrivate>
+            }
+          />
 
-        <Route
-          path="/projects/edit/:projectId"
-          element={
-            <IsPrivate>
-              {" "}
-              <EditProjectPage />{" "}
-            </IsPrivate>
-          }
-        />
+          {/* the discover page */}
+          <Route path="/userspage" element={<UsersPage />} />
+          <Route path="/userspage/:userId" element={<UsersDetailsPage />} />
 
-        <Route
-          path="/signup"
-          element={
-            <IsAnon>
-              {" "}
-              <SignupPage />{" "}
-            </IsAnon>
-          }
-        />
-        <Route
-          path="/login"
-          element={
-            <IsAnon>
-              {" "}
-              <LoginPage />{" "}
-            </IsAnon>
-          }
-        />
+          {/*       <Route
+            path="/projects/edit/:projectId"
+            element={
+              <IsPrivate>
+                {" "}
+                <EditProjectPage />{" "}
+              </IsPrivate>
+            }
+          /> */}
 
-        {/* Add route for the AddCloset component */}
-        <Route path="/add-closet" element={<AddCloset />} />
-      </Routes>
+          <Route
+            path="/signup"
+            element={
+              <IsAnon>
+                {" "}
+                <SignupPage />{" "}
+              </IsAnon>
+            }
+          />
+          <Route
+            path="/login"
+            element={
+              <IsAnon>
+                {" "}
+                <LoginPage />{" "}
+              </IsAnon>
+            }
+          />
+        </Routes>
+      </ClosetProvider>
     </div>
   );
 }

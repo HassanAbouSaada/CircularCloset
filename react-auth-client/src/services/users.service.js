@@ -1,6 +1,6 @@
 import axios from "axios";
 
-class ProjectsService {
+class UsersService {
   constructor() {
     this.api = axios.create({
       baseURL: import.meta.env.SERVER_URL || "http://localhost:5005",
@@ -19,33 +19,35 @@ class ProjectsService {
     });
   }
 
-  // POST /api/projects
-  createProject = (requestBody) => {
-    return this.api.post("/api/projects", requestBody);
+  
+
+  // POST /api/users
+ /*  createProject = (requestBody) => {
+    return this.api.post("/api/users", requestBody);
+  }; */
+
+  // GET /api/users
+  getAllUsers = () => {
+    return this.api.get("/api/users");
   };
 
-  // GET /api/projects
-  getAllProjects = () => {
-    return this.api.get("/api/projects");
+  // GET /api/users/:id
+  getUser = (id) => {
+    return this.api.get(`/api/users/${id}`);
   };
 
-  // GET /api/projects/:id
-  getProject = (id) => {
-    return this.api.get(`/api/projects/${id}`);
-  };
-
-  // PUT /api/projects/:id
-  updateProject = (id, requestBody) => {
+  // PUT /api/users/:id
+ /*  updateProject = (id, requestBody) => {
     return this.api.put(`/api/projects/${id}`, requestBody);
-  };
+  }; */
 
   // DELETE /api/projects/:id
-  deleteProject = (id) => {
+/*   deleteProject = (id) => {
     return this.api.delete(`/api/projects/${id}`);
-  };
+  }; */
 }
 
 // Create one instance (object) of the service
-const projectsService = new ProjectsService();
+const usersService = new UsersService();
 
-export default projectsService;
+export default usersService;
