@@ -107,11 +107,7 @@ The **CircularCloset ♻️** app is released under the [MIT License](https://op
 ## Creator
 
 
-<style>
-.round-image {
-  border-radius: 50%;
-}
-</style>
+
 
 | [<img src="https://github.com/HassanAbouSaada.png" alt="Hassan Abou Saada" width="100" height="100" class="round-image" />](https://github.com/HassanAbouSaada) |
 | --- |
@@ -126,11 +122,7 @@ to the [Ironhack](https://www.ironhack.com/) | Berlin team and for my instructor
 
 
 
-<style>
-.round-image {
-  border-radius: 50%;
-}
-</style>
+
 
 | [<img src="https://github.com/omardieh.png" alt="Omar" width="100" height="100" class="round-image" />](https://github.com/omardieh) | [<img src="https://github.com/arekiu.png" alt="Alex" width="100" height="100" class="round-image" />](https://github.com/arekiu) |
 | --- | --- |
